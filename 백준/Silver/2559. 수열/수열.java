@@ -12,7 +12,7 @@ public class Main {
 
         st = new StringTokenizer(br.readLine(), " ");
         int n = Integer.parseInt(st.nextToken());
-        int k =  Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
 
         int[] arr = new int[n];
         st = new StringTokenizer(br.readLine(), " ");
@@ -20,15 +20,18 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i < arr.length - k + 1; i++) {
-            int sum = 0;
-            for (int j = i; j < i + k; j++) {
-                sum += arr[j];
-            }
-            if (max < sum) max = sum;
+
+        int[] sumArr = new int[n];
+        sumArr[0] = arr[0];
+        for (int i = 1; i < n; i++) {
+            sumArr[i] = arr[i] + sumArr[i - 1];
         }
 
+        int max = sumArr[k - 1];
+        for (int i = k; i < n; i++) {
+            int cur = sumArr[i] - sumArr[i - k];
+            max = Math.max(max, cur);
+        }
         System.out.println(max);
     }
 }
