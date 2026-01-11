@@ -1,32 +1,26 @@
-import java.util.*;
-
 class Solution {
     public String solution(String s) {
-      
-        String[] arr = s.split(" ", -1);
-        
-        StringBuilder sb = new StringBuilder();
-        
-        String answer = "";
-        
-        boolean isStart = true;
-        for (int i = 0; i < s.length(); i++) {
-            
-            if (s.charAt(i) == ' ') {
-                sb.append(" ");
-                isStart = true;
+        String lower = s.toLowerCase();
+        StringBuilder sb = new StringBuilder(lower.length());
+
+        boolean start = true; 
+
+        for (int i = 0; i < lower.length(); i++) {
+            char c = lower.charAt(i);
+
+            if (c == ' ') {
+                sb.append(' ');
+                start = true;
             } else {
-                if (isStart) {
-                    sb.append(String.valueOf(s.charAt(i)).toUpperCase());
-                    isStart = false;
+                if (start && c >= 'a' && c <= 'z') {
+                    sb.append((char)(c - ('a' - 'A')));
                 } else {
-                    sb.append(String.valueOf(s.charAt(i)).toLowerCase());
+                    sb.append(c);
                 }
-                
+                start = false;
             }
         }
-        
-            answer = sb.toString();
-            return answer;
+
+        return sb.toString();
     }
 }
