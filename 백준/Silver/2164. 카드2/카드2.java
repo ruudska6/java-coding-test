@@ -1,28 +1,25 @@
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Scanner;
 
 public class Main {
-    public static Queue<Integer> q = new LinkedList<>();
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
 
-        for (int i = 1; i <= N; i++) {
-            q.add(i);
+        Queue<Integer> queue = new ArrayDeque<>();
+
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+
+        for (int i = 1; i <= n; i++) {
+            queue.offer(i);
         }
 
-        int count = 1;
-        while(q.size() != 1) {
-            if(count++ % 2 == 1) {
-                q.poll();
-            } else {
-                q.add(q.poll());
-            }
+        while (queue.size() > 1) {
+            queue.poll();
+            queue.offer(queue.poll());
         }
 
-        System.out.println(q.peek());
-
+        System.out.println(queue.peek());
     }
 }
