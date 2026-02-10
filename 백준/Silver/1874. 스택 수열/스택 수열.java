@@ -1,39 +1,56 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.Stack;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        Stack<Integer> stack = new Stack<>();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        int num = 1;
-        
-        for (int i = 0; i < n; i++) {
-            int input = scanner.nextInt();
+        int n = Integer.parseInt(br.readLine());
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
 
-            if (num <= input) {
-                while(num <= input) {
-                    stack.push(num++);
+        int now = 1;
+        boolean isSequence = true;
+        for (int i = 1; i <= n; i++) {
+            int num = Integer.parseInt(br.readLine());
+
+            if (now <= num) {
+                while (now != num) {
+                    stack.push(now++);
                     sb.append("+").append("\n");
                 }
 
-                stack.pop();
-                sb.append("-").append("\n");
-            } else {
-                int top = stack.pop();
-                if (top == input) {
+                stack.push(now++);
+                sb.append("+").append("\n");
+
+            } else if (now > num) {
+                if (!stack.isEmpty()) {
+                    int top = stack.pop();
                     sb.append("-").append("\n");
+                    if (top == num) {
+                        continue;
+                    } else {
+                        isSequence = false;
+                        break;
+                    }
                 } else {
-                    System.out.println("NO");
-                    return;
+                    isSequence = false;
+                    break;
                 }
             }
+
+            stack.pop();
+            sb.append("-").append("\n");
         }
-        
-        System.out.println(sb);
+
+        if (!isSequence) {
+            System.out.println("NO");
+        } else {
+            System.out.println(sb);
+        }
     }
 }
