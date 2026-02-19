@@ -1,40 +1,43 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
 
-    static int n, m;
-    static int[] arr = new int[10];
+    static int N, M;
+    static boolean[] visited;
+    static int[] A;
 
-    public static void dfs(int k, int start) {
-
-        if (k == m) {
-            for (int i = 0; i < m; i++) {
-                System.out.print(arr[i] + " ");
+    static void dfs(int K, int L) {
+        if (L == M) {
+            for (int i = 0; i < M; i++) {
+                System.out.print(A[i] + " ");
             }
 
             System.out.println();
-            return;
-
         } else {
-            for (int i = start; i <= n; i++) {
-                arr[k] = i;
-                dfs(k+1, i+1);
 
+            for (int i = 1; i <= N; i++) {
+                if (!visited[i] && K < i) {
+                    visited[i] = true;
+                    A[L] = i;
+                    dfs(i, L+1);
+                    visited[i] = false;
+                }
             }
+
         }
     }
+    public static void main(String[] args) throws Exception {
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
-        n = scanner.nextInt();
-        m = scanner.nextInt();
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-        dfs(0,1);
-
+        visited = new boolean[N+1];
+        A = new int[N+1];
+        dfs(0, 0);
     }
-
-
 }
