@@ -1,26 +1,22 @@
 class Solution {
-    static int N,S;
-    static int[] arr;
-    static int count;
     
-    public int solution(int[] numbers, int target) {
-        N = numbers.length;
-        S = target;
-        arr = numbers;
-        dfs(0, 0);
-        
-        return count;
+    static int answer;
+    
+    private static void dfs(int[] numbers, int target, int k, 
+                            int sum) {
+        if (k == numbers.length) {
+            if (sum == target) answer++;
+        }
+        else {
+            dfs(numbers, target, k + 1, sum + numbers[k]);       
+            dfs(numbers, target, k + 1, sum - numbers[k]);
+        }
     }
     
-    static void dfs(int depth, int s) {
-        if (depth == N) {
-            if (s == S) {
-                count++;
-                return;
-            }
-        } else {
-            dfs(depth + 1, s + arr[depth]);
-            dfs(depth + 1, s - arr[depth]);
-        }
+    public int solution(int[] numbers, int target) {
+    
+        dfs(numbers, target, 0, 0);
+        
+        return answer;
     }
 }
