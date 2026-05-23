@@ -2,46 +2,45 @@ import java.util.*;
 
 class Solution {
     
-    static boolean[][] visited;
-    static int[][] map;
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
+    private static boolean[][] visited;
+    private static int[] dx = new int[] {-1, 1, 0, 0};    
+    private static int[] dy = new int[] {0, 0, -1, 1};   
     
-    static void bfs(int x, int y) {
-        int answer = 0;
-
+    private static int bfs(int i, int j, int[][] maps) {
         Queue<int[]> q = new LinkedList<>();
-        visited[x][y] = true;
-        q.offer(new int[] {x, y});
+        visited[i][j] = true;
+        q.offer(new int[] {i, j});
+        int dis = 0;
         
         while (!q.isEmpty()) {
-            int[] now = q.poll();
-            
-            for (int i = 0; i < 4; i++) {
-                int nx = now[0] + dx[i];
-                int ny = now[1] + dy[i];
+            int cur[] = q.poll();
+            for (int k = 0; k < 4; k++) {
+                int nx = cur[0] + dx[k];
+                int ny = cur[1] + dy[k];
                 
-                if (nx >= 0 && ny >= 0 && nx < map.length 
-                       && ny < map[0].length && !visited[nx][ny] && map[nx][ny] == 1) {
-                    q.offer(new int[] {nx, ny});
+                if (nx >=0 && ny >= 0 && 
+                    nx < maps.length && ny < maps[0].length &&
+                    !visited[nx][ny] && maps[nx][ny] == 1
+                   )
+                {
                     visited[nx][ny] = true;
-                    map[nx][ny] = map[now[0]][now[1]] + 1;
+                    maps[nx][ny] += maps[cur[0]][cur[1]]; 
+                    q.offer(new int[] {nx, ny});
+                    
+                    if (nx == maps.length - 1 && ny == maps[0].length - 1) {
+                        return maps[nx][ny];
+                    }
                 }
             }
-            
         }
+        
+        return -1;
     }
     
     public int solution(int[][] maps) {
-        int answer = 0;
-        
-        map = maps;
         visited = new boolean[maps.length][maps[0].length];
-        bfs(0, 0);
+        int answer = bfs(0, 0, maps);
         
-        answer = map[maps.length-1][maps[0].length-1];
-        
-        if (answer == 1) answer = -1;
         return answer;
     }
 }
