@@ -1,45 +1,53 @@
 import java.util.*;
 
 class Solution {
+    static int[] dx = new int[] {-1, 1, 0, 0}; 
+    static int[] dy = new int[] {0, 0, -1, 1};
+    static boolean[][] visited;
     
-    private static boolean[][] visited;
-    private static int[] dx = new int[] {-1, 1, 0, 0};    
-    private static int[] dy = new int[] {0, 0, -1, 1};   
-    
-    private static int bfs(int i, int j, int[][] maps) {
+    private static int bfs(int x, int y, int[][] maps) {
         Queue<int[]> q = new LinkedList<>();
-        visited[i][j] = true;
-        q.offer(new int[] {i, j});
-        int dis = 0;
+        q.offer(new int[] {x, y});
+        visited[x][y] = true;
+        
+        int cnt = 1;
         
         while (!q.isEmpty()) {
-            int cur[] = q.poll();
-            for (int k = 0; k < 4; k++) {
-                int nx = cur[0] + dx[k];
-                int ny = cur[1] + dy[k];
-                
-                if (nx >=0 && ny >= 0 && 
-                    nx < maps.length && ny < maps[0].length &&
-                    !visited[nx][ny] && maps[nx][ny] == 1
-                   )
-                {
-                    visited[nx][ny] = true;
-                    maps[nx][ny] += maps[cur[0]][cur[1]]; 
-                    q.offer(new int[] {nx, ny});
+            int len = q.size();
+            for (int i = 0; i < len; i++) {
+                int[] cur = q.poll();
+                int curX = cur[0];
+                int curY = cur[1];
+                for (int j = 0; j < 4; j++) {
+                    int nx = curX + dx[j];
+                    int ny = curY + dy[j];
                     
-                    if (nx == maps.length - 1 && ny == maps[0].length - 1) {
-                        return maps[nx][ny];
+                    int n = maps.length - 1;
+                    int m = maps[0].length - 1;
+                                        
+                    if (nx >= 0 && nx <= n && ny >= 0 && ny <= m 
+                        && !visited[nx][ny] && maps[nx][ny] == 1) {
+                        
+                        if (nx == n && ny == m) return cnt + 1;
+                        
+                        q.offer(new int[] {nx, ny});
+                        visited[nx][ny] = true;
                     }
                 }
             }
+            
+           cnt++;
         }
         
         return -1;
     }
     
     public int solution(int[][] maps) {
+        int answer = 0;
+        
         visited = new boolean[maps.length][maps[0].length];
-        int answer = bfs(0, 0, maps);
+        
+        answer = bfs(0, 0, maps);
         
         return answer;
     }
