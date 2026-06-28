@@ -1,26 +1,33 @@
+import java.util.*;
+
 class Solution {
     public String solution(String s) {
-        String lower = s.toLowerCase();
-        StringBuilder sb = new StringBuilder(lower.length());
-
-        boolean start = true; 
-
-        for (int i = 0; i < lower.length(); i++) {
-            char c = lower.charAt(i);
-
-            if (c == ' ') {
-                sb.append(' ');
-                start = true;
-            } else {
-                if (start && c >= 'a' && c <= 'z') {
-                    sb.append((char)(c - ('a' - 'A')));
-                } else {
-                    sb.append(c);
-                }
-                start = false;
+        String answer = "";
+            
+        boolean isFirst = true;        
+        for (int i = 0; i < s.length(); i++) {
+            
+            if (Character.isWhitespace(s.charAt(i))) {
+                isFirst = true;
+                answer += " ";
+                continue;
             }
-        }
+            
+            if (isFirst) {
+                isFirst = false;
+                if (s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
+                    answer += 
+                        String.valueOf(Character.toUpperCase(s.charAt                          (i)));
+                } else {
+                    answer += String.valueOf(s.charAt(i));
+                }
+            } else {
+                answer += 
+                    String.valueOf(Character.toLowerCase(s.charAt                          (i)));
+                }
+        
 
-        return sb.toString();
-    }
+        }
+         return answer;
+    }   
 }
