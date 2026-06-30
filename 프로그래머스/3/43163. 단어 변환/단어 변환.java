@@ -1,56 +1,42 @@
-import java.util.*;
-
-class Solution {    
+class Solution {
     static boolean[] visited;
+    static int answer = Integer.MAX_VALUE;
     
-    public int bfs(Node begin, String target, String[] words) {
-        Queue<Node> q = new LinkedList<>();
-        q.offer(begin);
-        
-        while (!q.isEmpty()) {
-            Node cur = q.poll();
-            if (cur.word.equals(target)) return cur.cnt;
-            
+    static void dfs(int depth, String begin, String target, String[] words) {
+        if (begin.equals(target)) {
+            answer = Math.min(answer, depth);
+            return;
+        }
+                
+        else {
             for (int i = 0; i < words.length; i++) {
-                if (!visited[i] && isConnected(cur.word, words[i])) {
-                    q.offer(new Node(words[i], cur.cnt + 1));
+                if (isOneDiff(begin, words[i]) && !visited[i]) {
                     visited[i] = true;
+                    dfs(depth + 1, words[i], target, words);
+                    visited[i] = false;
                 }
             }
-            
         }
         
-        return 0;
+        return;
+    }
+    
+    static boolean isOneDiff(String str, String target) {
+        int cnt = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) != target.charAt(i)) {
+                cnt++;
+            }
+        }
+        
+        if (cnt == 1) return true;
+        return false;
     }
     
     public int solution(String begin, String target, String[] words) {
-
-        visited = new boolean[words.length];        
-        int answer = bfs(new Node(begin, 0), target, words);
+        visited = new boolean[words.length];
+        dfs(0, begin, target, words);
         
-        return answer;
-    }
-    
-    static boolean isConnected(String a, String b) {
-        int diff = 0;
-        for (int i = 0; i < a.length(); i++) {
-            if (a.charAt(i) != b.charAt(i)) {
-                diff++;
-            }
-        }
-
-        if (diff == 1) return true;
-        else return false;
-    }
-    
-    
-    class Node {
-        String word;
-        int cnt;
-        
-        Node (String word, int cnt) {
-            this.word = word;
-            this.cnt = cnt;
-        }
+        return answer == Integer.MAX_VALUE ? 0 : answer;
     }
 }
