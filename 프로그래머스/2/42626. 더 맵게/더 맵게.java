@@ -5,22 +5,21 @@ class Solution {
         int answer = 0;
         
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        
         for (int i = 0; i < scoville.length; i++) {
             minHeap.offer(scoville[i]);
         }
         
-        while(minHeap.size() >= 2 && minHeap.peek() < K) {
+        while (minHeap.size() >= 2 && minHeap.peek() < K) {
+            
             int first = minHeap.poll();
             int second = minHeap.poll();
+            int mixed = first + (second * 2);
             
-            int fs = first + (second * 2);
-            
-            minHeap.offer(fs);
+            minHeap.offer(mixed);
             answer++;
         }
         
-        if (minHeap.peek() < K) return -1;
-        
-        return answer;
+        return minHeap.peek() >= K ? answer : -1;
     }
 }
