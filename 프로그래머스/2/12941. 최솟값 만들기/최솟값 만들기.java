@@ -5,7 +5,7 @@ class Solution
     public int solution(int []A, int []B)
     {
         int answer = 0;
-        
+
         Arrays.sort(A);
         
         reverse(B);
@@ -19,11 +19,11 @@ class Solution
         return answer;
     }
     
-    static int[] reverse(int[] arr) {
-        for(int i = 0; i < arr.length; i++) {
+    private static int[] reverse(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
             arr[i] = arr[i] * -1;
         }
         
         return arr;
-    }
+    } 
 }
