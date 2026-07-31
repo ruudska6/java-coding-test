@@ -2,25 +2,25 @@ class Solution {
     public String solution(String s) {
         String answer = "";
         
-        char[] chs = s.toCharArray();
+        char[] arr = s.toCharArray();
         
-        int idx = 0;
-        for (int i = 0; i < chs.length; i++) {
-            if(chs[i] != ' ') {
-                if (idx % 2 == 0) {
-                    chs[i] = Character.toUpperCase(chs[i]);
-                } else {
-                    chs[i] = Character.toLowerCase(chs[i]);
-                }
-                
-                idx++;
+        int index = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == ' ') {
+                index = 0;
+                continue;
+            }
+            
+            if (index % 2 == 0) {
+                arr[i] = Character.toUpperCase(arr[i]); 
+                index++;
             } else {
-                idx = 0;
+                arr[i] = Character.toLowerCase(arr[i]); 
+                index++;
             }
         }
         
-        answer = new String(chs);
-        
+        answer = new String(arr);
         return answer;
     }
 }
