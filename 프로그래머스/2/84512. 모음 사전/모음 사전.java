@@ -1,30 +1,30 @@
 class Solution {
-    static String[] list = {"A", "E", "I", "O", "U"};
-    static int count;
-    static boolean flag;
-    public int solution(String word) {
     
+    static char[] vowels = {'A', 'E', 'I', 'O', 'U'}; 
+    static int cnt = 0;
+    static int answer; 
+    
+    public int solution(String word) {
+            
+        dfs("", word);
         
-        dfs(word, "");
-        
-        return count;
+        return answer;
     }
     
-    private static void dfs(String word, String k) {
-        if (flag) return;
-        
-        if (!k.isEmpty()) {
-            count++;
-            if (word.equals(k)) {
-                flag = true;
-                return;
-            }
-        }
-        
-        if (k.length() == 5) return;
+    private void dfs(String now, String word) { 
 
-        for (int i = 0; i < list.length; i++) {
-            dfs(word, k + list[i]);
+        if (now.equals(word)) {
+            answer = cnt;
+            return;
+        } 
+
+        if (now.length() == 5) return;
+        
+        for (char c : vowels) {
+            cnt++;
+            dfs(now + c, word);
         }
+        
+        return;
     }
 }
