@@ -1,26 +1,23 @@
 class Solution {
     public int[] solution(int brown, int yellow) {
-  
-        int area = brown + yellow;
-        
-        int row = 0;
-        int col = 0;
-        for (int i = 1; i <= Math.sqrt(area); i++) {
-            if (area % i == 0) {
-                col = area / i;
-                if ((i - 2) * (col - 2) == yellow) {
-                    row = i;
-                    if (row < col) {
-                        int temp = col;
-                        col = row;
-                        row = temp;
+        int[] answer = {};
+            
+        for (int w = 1; w <= brown + yellow; w++) {
+            for (int h = 1; h <= brown + yellow; h++) {
+                if ((w - 2) * (h - 2) == yellow) {
+                    if (w * h == brown + yellow) {
+                        if (w > h) {
+                            return new int[] {w, h};      
+                        } else {
+                            return new int[] {h, w};
+                        }
+
                     }
-                    break;
+      
                 }
             }
         }
         
-        int[] answer = {row, col};  
         return answer;
     }
 }
