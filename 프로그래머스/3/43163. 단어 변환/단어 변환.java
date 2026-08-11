@@ -1,42 +1,52 @@
 class Solution {
+    static int min = Integer.MAX_VALUE;
     static boolean[] visited;
-    static int answer = Integer.MAX_VALUE;
+    static int cnt;
     
-    static void dfs(int depth, String begin, String target, String[] words) {
-        if (begin.equals(target)) {
-            answer = Math.min(answer, depth);
+    public int solution(String begin, String target, String[] words) {
+
+        visited = new boolean[words.length];
+        dfs(begin, target, words);
+        
+        if (min == Integer.MAX_VALUE) return 0;
+        return min;
+    }
+    
+    
+    private void dfs(String now, String target, String[] words) {
+
+        System.out.print(now + " -> ");
+        
+        if (now.equals(target)) {
+            if (min > cnt) {
+                min = cnt;
+            }
             return;
         }
-                
-        else {
-            for (int i = 0; i < words.length; i++) {
-                if (isOneDiff(begin, words[i]) && !visited[i]) {
+        
+        for (int i = 0; i < words.length; i++) {
+            if (!visited[i]) {
+                if (isOneDiff(now, words[i])) {
                     visited[i] = true;
-                    dfs(depth + 1, words[i], target, words);
+                    cnt++;
+                    dfs(words[i], target, words);
+                    cnt--;
                     visited[i] = false;
                 }
             }
         }
-        
-        return;
-    }
+    } 
     
-    static boolean isOneDiff(String str, String target) {
+    private static boolean isOneDiff(String s, String target) {
         int cnt = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) != target.charAt(i)) {
+        
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) != target.charAt(i)) {
                 cnt++;
             }
         }
         
-        if (cnt == 1) return true;
+        if (cnt == 1) return true; 
         return false;
-    }
-    
-    public int solution(String begin, String target, String[] words) {
-        visited = new boolean[words.length];
-        dfs(0, begin, target, words);
-        
-        return answer == Integer.MAX_VALUE ? 0 : answer;
     }
 }
