@@ -4,39 +4,34 @@ class Solution {
     public int solution(int[] priorities, int location) {
         int answer = 0;
         
-        ArrayDeque<int[]> q = new ArrayDeque<>();
+        Queue<int[] > q = new LinkedList<>();
         for (int i = 0; i < priorities.length; i++) {
-            q.offer(new int[] {i, priorities[i]});
+            // 프로세스 이름, 중요도
+            int[] p = {i, priorities[i]};
+            q.offer(p);
         }
         
-        int count = 1;
-        while (!q.isEmpty()) {
-            int[] now = q.poll();
-            
-            if (!isHigh(q, now)) {
-                q.offer(now);
-            } else {
-                if (now[0] == location) {
-                    answer = count;
-                    break;
-                }      
-                
-                count++;
+        int cnt = 1;
+        while (cnt <= priorities.length) {
+            int[] cur = q.poll();
+
+            int max = -1;
+            for (int i = 0; i < q.size(); i++) {
+                int[] next = q.poll();
+                q.offer(next);
+                max = Math.max(next[1], max);
+            }
+                        
+            if (cur[1] < max) {
+                q.offer(cur);
+                continue;
             }
             
-          
- 
-        }
-                            
-        return answer;
-    }
-    
-    private static boolean isHigh(ArrayDeque<int[]> q, int[] now) {
-       
-        for (int[] x : q) {
-            if (now[1] < x[1]) return false;
+            if (cur[0] == location) return cnt;
+            cnt++;
+        
         }
         
-        return true;
+        return answer;
     }
 }
