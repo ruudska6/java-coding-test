@@ -1,19 +1,25 @@
+import java.util.*;
+
 class Solution {
     public int[] solution(int[] prices) {
         int[] answer = new int[prices.length];
         
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i < prices.length; i++) {
-            int time = 0;
-            for (int j = i + 1; j < prices.length; j++) {
-                time++;
-                if (prices[i] > prices[j]) {
-                    break;
-                }
+            while (!stack.isEmpty() 
+                   && prices[stack.peek()] > prices[i]) {
+                int idx = stack.pop();
+                answer[idx] = i - idx;
             }
             
-            answer[i] = time;
+            stack.push(i);
         }
         
+        while (!stack.isEmpty()) {
+            int idx = stack.pop();
+            answer[idx] = prices.length - 1 - idx;
+        }
+
         return answer;
     }
 }
