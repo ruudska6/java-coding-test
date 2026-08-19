@@ -2,24 +2,25 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] scoville, int K) {
-        int answer = 0;
-        
+
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-        
-        for (int i = 0; i < scoville.length; i++) {
-            minHeap.offer(scoville[i]);
+        for (int s : scoville) {
+            minHeap.add(s);
         }
         
-        while (minHeap.size() >= 2 && minHeap.peek() < K) {
+        int cnt = 0;
+        while (minHeap.peek() < K) {
             
-            int first = minHeap.poll();
-            int second = minHeap.poll();
-            int mixed = first + (second * 2);
+            if (minHeap.size() < 2) return -1; 
             
-            minHeap.offer(mixed);
-            answer++;
+            int firstMin = minHeap.poll();
+            int SecondMin = minHeap.poll();
+            int mixed = firstMin + (SecondMin * 2);
+            
+            minHeap.add(mixed);
+            cnt++;
         }
         
-        return minHeap.peek() >= K ? answer : -1;
+        return cnt;
     }
 }
