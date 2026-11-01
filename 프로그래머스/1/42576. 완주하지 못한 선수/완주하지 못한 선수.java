@@ -10,10 +10,8 @@ class Solution {
         }
         
         for (String c : completion) {
-            
-            if (ps.containsKey(c)) {
-                ps.put(c, ps.get(c) - 1);
-            }
+            ps.put(c, ps.get(c) - 1);
+
         }
         
         for (String s : ps.keySet()) {
