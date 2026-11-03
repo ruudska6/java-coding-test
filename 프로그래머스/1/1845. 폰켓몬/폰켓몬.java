@@ -4,18 +4,15 @@ class Solution {
     public int solution(int[] nums) {
         int answer = 0;
         
-        //중복 제거
-        Set<Integer> set = new HashSet<>();
-        
-        for (int i = 0; i < nums.length; i++) {
-            set.add(nums[i]);
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
         
+        System.out.println(map);
         
-        if (set.size() > nums.length / 2) {
-            return nums.length / 2;
-        }
+        answer = Math.min(nums.length / 2, map.size());
         
-        return set.size();
+        return answer;
     }
 }
