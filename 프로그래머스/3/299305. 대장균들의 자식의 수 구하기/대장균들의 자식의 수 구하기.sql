@@ -1,8 +1,7 @@
 -- 코드를 작성해주세요
-select e1.id, count(e2.id)
-from ecoli_data e1
-left join ecoli_data e2
-ON e1.id = e2.parent_id
-GROUP BY e1.id
-ORDER BY   
-    e1.id asc;
+SELECT a.id, count(b.parent_id) 
+FROM
+    ecoli_data a
+LEFT JOIN ecoli_data b
+    ON a.id = b.parent_id
+GROUP BY a.ID
