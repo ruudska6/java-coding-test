@@ -1,17 +1,16 @@
+import java.util.*;
+
 class Solution {
     public int[] solution(long n) {
-
         
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.valueOf(n));
-        sb.reverse();
+        String sNum = String.valueOf(n);
         
-        String s = sb.toString();
-        System.out.println(s);
+        StringBuilder sb = new StringBuilder(sNum);
+        String reversed = sb.reverse().toString();
         
-        int[] answer = new int[s.length()];
-        for (int i = 0; i < s.length(); i++) {
-            answer[i] = s.charAt(i) -'0';
+        int[] answer = new int[sNum.length()];
+        for (int i = 0; i < sNum.length(); i++) {
+            answer[i] = reversed.charAt(i) - '0';
         }
         
         return answer;
