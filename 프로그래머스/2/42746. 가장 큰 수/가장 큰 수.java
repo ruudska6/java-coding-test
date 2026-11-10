@@ -4,25 +4,24 @@ class Solution {
     public String solution(int[] numbers) {
         String answer = "";
         
-        Integer[] arr = new Integer[numbers.length];
-
+        String[] sNums = new String[numbers.length]; 
         for (int i = 0; i < numbers.length; i++) {
-            arr[i] = numbers[i];
+            sNums[i] = String.valueOf(numbers[i]);
         }
         
-        Arrays.sort(arr, (o1, o2) -> {
-            String ab = String.valueOf(o1) + String.valueOf(o2);
-            String ba = String.valueOf(o2) + String.valueOf(o1);
-            return ba.compareTo(ab);
+        Arrays.sort(sNums, (a, b) -> {
+            String c = a + b;
+            String d = b + a;
+            
+            return Integer.compare(Integer.parseInt(d), Integer.parseInt(c));
         });
         
-        StringBuilder sb = new StringBuilder();
-        for (int num : arr) {
-            sb.append(num);
+        for (String s : sNums) {
+            answer += s;
         }
         
-        answer = sb.toString();
-        if (answer.charAt(0) == '0') return "0";
+        if (sNums[0].equals("0")) return "0";
+        
         return answer;
     }
 }
